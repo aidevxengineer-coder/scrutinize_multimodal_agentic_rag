@@ -5,6 +5,7 @@ import type { ConversationItem, UserProject } from "../types/api";
 import { IconPlus, IconSettings, IconX } from "./icons";
 import { ProjectSidebarCard } from "./ProjectSidebarCard";
 import { useConfirm } from "./ConfirmDialogProvider";
+import { EyeLogo } from "./EyeLogo";
 
 function notifyConversationsChanged(scope?: "general" | "project", projectId?: string) {
   window.dispatchEvent(
@@ -201,7 +202,7 @@ export function Sidebar({ compact = false }: { compact?: boolean }) {
   return (
     <>
       <aside className={`hidden h-full shrink-0 flex-col border-r border-[var(--app-border)] bg-[var(--app-bg-glass)] backdrop-blur-3xl lg:flex relative z-10 shadow-[4px_0_20px_rgba(0,0,0,0.06),_8px_0_40px_rgba(0,0,0,0.03)] ${compact ? "w-24" : "w-80"}`}>
-        <div className="flex items-center gap-2 px-5 py-5"><div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[var(--app-primary)] font-bold text-[var(--app-primary-text)]">S</div>{!compact && <div><b className="block text-base text-[var(--app-text)]">Scrutinize</b><span className="block max-w-[220px] truncate text-xs text-[var(--app-text-muted)]">{state.project?.projectName}</span></div>}</div>
+        <div className="flex items-center gap-2 px-5 py-5"><EyeLogo size={30} gap={5} />{!compact && <div><b className="block text-base text-[var(--app-text)]">Scrutinize</b><span className="block max-w-[220px] truncate text-xs text-[var(--app-text-muted)]">{state.project?.projectName}</span></div>}</div>
         {!compact && <div className="glass-sidebar-scroll min-h-0 flex-1 overflow-y-auto px-3 pb-4">
         <section className="mt-2">
           <div className="flex items-center justify-between px-3 pb-2">

@@ -16,7 +16,11 @@ import type {
   RetrievalCandidatesDto,
   SearchV2Response,
   UploadResponse,
+  ProjectTool,
+  ProjectToolCreate,
+  ProjectToolUpdate,
 } from "../types/api";
+
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 const SEARCH_API_PATH = import.meta.env.VITE_SEARCH_API ?? "/v2/search";
@@ -504,4 +508,54 @@ export async function streamConversationMessage(
 
   return { completed };
 }
+
+// ---------------------------------------------------------------------------
+// Custom Tools API (V1)
+// ---------------------------------------------------------------------------
+
+export async function getProjectTools(projectId: string): Promise<ProjectTool[]> {
+  return request<ProjectTool[]>(`/v1/projects/${projectId}/tools`);
+}
+
+export async function createProjectTool(
+  projectId: string,
+  data: ProjectToolCreate
+): Promise<ProjectTool> {
+  return request<ProjectTool>(`/v1/projects/${projectId}/tools`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateProjectTool(
+  projectId: string,
+  toolId: string,
+  data: ProjectToolUpdate
+): Promise<ProjectTool> {
+  return request<ProjectTool>(`/v1/projects/${projectId}/tools/${toolId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+}
+
+export async function toggleProjectTool(
+  projectId: string,
+  toolId: string,
+  isEnabled: boolean
+): Promise<ProjectTool> {
+  return request<ProjectTool>(`/v1/projects/${projectId}/tools/${toolId}/toggle`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ is_enabled: isEnabled }),
+  });
+}
+
+export async function deleteProjectTool(projectId: string, toolId: string): Promise<void> {
+  return request<void>(`/v1/projects/${projectId}/tools/${toolId}`, {
+    method: "DELETE",
+  });
+}
+
 

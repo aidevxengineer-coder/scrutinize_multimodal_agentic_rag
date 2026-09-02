@@ -216,3 +216,36 @@ export type ProjectInfo = {
   settings: Record<string, any>;
 };
 
+export type ExecutionMode = "client_delegated" | "server_webhook";
+
+export type ProjectTool = {
+  id: string;
+  project_id: string;
+  name: string;
+  display_name: string;
+  description: string;
+  is_enabled: boolean;
+  execution_mode: ExecutionMode;
+  webhook_url?: string | null;
+  webhook_method?: string | null;
+  webhook_headers?: Record<string, string> | null;
+  parameters_schema: Record<string, any>;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ProjectToolCreate = {
+  name: string;
+  display_name: string;
+  description: string;
+  is_enabled?: boolean;
+  execution_mode?: ExecutionMode;
+  webhook_url?: string | null;
+  webhook_method?: string | null;
+  webhook_headers?: Record<string, string> | null;
+  parameters_schema: Record<string, any>;
+};
+
+export type ProjectToolUpdate = Partial<ProjectToolCreate>;
+
+

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useApp } from "../context/AppContext";
 import { IconCopy, IconEye, IconEyeOff } from "./icons";
+import { CustomToolsView } from "./CustomToolsView";
 
 export function ProjectSettingsView() {
   const { state, updateSettings } = useApp();
@@ -66,17 +67,17 @@ export function ProjectSettingsView() {
 
   return (
     <div className="flex h-full flex-col overflow-y-auto bg-zinc-50/50 p-6 lg:p-8">
-      <div className="mx-auto w-full max-w-6xl space-y-8">
+      <div className="mx-auto w-full max-w-6xl space-y-10">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-zinc-900">Project Settings</h1>
           <p className="mt-1 text-sm text-zinc-500">
-            Manage your project API keys and customize agent prompts.
+            Manage your project API keys, custom tool definitions, and agent prompts.
           </p>
         </div>
 
-        <div className="max-w-3xl">
+        <div className="space-y-10">
           {/* API Keys Card */}
-          <div className="flex flex-col justify-between rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+          <div className="max-w-3xl flex flex-col justify-between rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
             <div>
               <div className="mb-4 flex items-start justify-between gap-4">
                 <div>
@@ -119,7 +120,7 @@ export function ProjectSettingsView() {
                 <div className="space-y-1.5 pt-4 border-t border-zinc-100">
                   <label className="text-xs font-medium text-zinc-700">Public Client Key</label>
                   <p className="text-[11px] text-zinc-500">
-                    Used for read/search actions. Safe to embed in frontend applications.
+                    Safe to expose in web widgets for read-only search and chat dispatches.
                   </p>
                   <div className="flex items-center gap-2">
                     <div className="flex-1 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-xs font-mono text-zinc-800 break-all select-all">
@@ -137,7 +138,14 @@ export function ProjectSettingsView() {
               </div>
             </div>
           </div>
+
+          {/* Custom Tools Section */}
+          <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+            <CustomToolsView projectId={state.project.projectId} />
+          </div>
+
         </div>
+
 
         {/* LLM Prompts Card */}
         <form onSubmit={handleSavePrompts} className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm space-y-6">

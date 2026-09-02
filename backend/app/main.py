@@ -18,6 +18,7 @@ from app.models.pipeline_log import (  # noqa: F401
 )
 from app.models.processing_job import ProcessingJob  # noqa: F401
 from app.models.project import Project  # noqa: F401
+from app.models.project_tool import ProjectTool  # noqa: F401
 from app.models.segment import Segment  # noqa: F401
 from app.models.user import ProjectMember, User  # noqa: F401
 
@@ -77,6 +78,7 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
+    app.add_middleware(RateLimitMiddleware)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origins,
@@ -84,7 +86,7 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    app.add_middleware(RateLimitMiddleware)
+
 
     app.include_router(api_router)
     return app

@@ -8,4 +8,6 @@ from app.models.processing_job import ProcessingJob
 from app.models.segment import Segment
 from app.models.pipeline_log import PipelineRun, PipelineStep
 from app.models.tool_approval import ToolApproval
+from app.models.project_tool import ProjectTool
+
 
